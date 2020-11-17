@@ -1,29 +1,29 @@
-import React, { Component } from "react";
-import { confetti } from "dom-confetti";
+import React, { useEffect, useImperativeHandle, useRef } from 'react'
+import { confetti } from 'dom-confetti'
 
-const style = {
-  position: "relative"
-};
+const defaultStyle = {
+  position: 'relative',
+}
 
-export default class Confetti extends Component {
-  constructor(props) {
-    super(props);
-    this.setRef = this.setRef.bind(this);
-  }
+export default function Confetti({ config, className, style, active }, ref) {
+  const confettiRef = useRef()
+  useImperativeHandle(ref, () => ({
+    fire: () => {
+      confetti(confettiRef.current, config)
+    },
+  }))
 
-  componentDidUpdate(prevProps) {
-    if (!prevProps.active && this.props.active) {
-      confetti(this.container, this.props.config);
+  useEffect(() => {
+    if (active) {
+      confetti(confettiRef.current, config)
     }
-  }
+  }, [active])
 
-  setRef(ref) {
-    this.container = ref;
-  }
-
-  render() {
-    return (
-      <div className={this.props.className} style={style} ref={this.setRef} />
-    );
-  }
+  return (
+    <div
+      className={className}
+      style={{ ...defaultStyle, ...style }}
+      ref={confettiRef}
+    />
+  )
 }
