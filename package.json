@@ -2,7 +2,7 @@
   "name": "react-dom-confetti",
   "version": "0.2.0",
   "description": "react component for dom-confetti",
-  "main": "lib/confetti.js",
+  "main": "src/confetti.js",
   "keywords": [
     "dom-confetti"
   ],
